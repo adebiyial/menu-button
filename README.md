@@ -23,7 +23,7 @@ function Example() {
           <MenuItem>
             <input type="text" placeholder="type"/>
           </MenuItem>
-            <MenuLink href="./">link</MenuLink>
+          <MenuLink href="./">link</MenuLink>
         </MenuList>
       </Menu>
     </div>
