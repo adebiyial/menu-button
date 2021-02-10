@@ -117,6 +117,30 @@ function useClickOutside(initialState) {
 }
 ```
 
+The `MenuList` and `MenuItem`, and `MenuLink` also take the shape:
+
+```js
+function MenuList({ children }) {
+  const context = useMenuButtonContext();
+
+  return context.on ? <div className="menu-items" ref={context.elRef}>
+    {Children.map(children, child => {
+      return cloneElement(child, {
+        className: "menu-item"
+      })
+    })}
+  </div> : null
+}
+
+function MenuItem({as = "div", children, ...props}) {
+  return createElement(as, { ...props }, children);
+}
+
+function MenuLink({href, children, ...props}) {
+  return createElement("a", { href, ...props }, children);
+}
+```
+
 We listen for the `click` and `keydown` event on the `document` when the menu is open, then
 close it if the conditions in `onDocumentClick` are met.
 
