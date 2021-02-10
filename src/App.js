@@ -1,10 +1,9 @@
 import { createContext, cloneElement,  Children, useState, useContext, useEffect, useCallback, useRef, createElement } from "react";
 
-const MenuContext = createContext(null);
-function Menu({children}) {
-  const [on, setOn] = useState(false)
-  const toggle = () => setOn(!on)
+function useClickOutside(initialState) {
+  const [on, setOn] = useState(initialState)
   const elRef = useRef();
+  const toggle = () => setOn(!on)
 
   const onDocumentClick = useCallback(
     (el) => {
@@ -34,6 +33,7 @@ function Menu({children}) {
 
 
   useEffect(() => {
+    // 1. Only attach the event handler to document when `on` is true
     if (on) {
       document.addEventListener('click', onDocumentClick);
       document.addEventListener('keydown', onDocumentClick);
@@ -45,6 +45,13 @@ function Menu({children}) {
       document.removeEventListener('keydown', onDocumentClick);
     };
   }, [on, onDocumentClick])
+
+  return {on, elRef, toggle}
+}
+
+const MenuContext = createContext(null);
+function Menu({children}) {
+  const { on, elRef , toggle} = useClickOutside(false)
 
   return <MenuContext.Provider value={{ on, toggle, elRef }}>
       {children}
@@ -88,12 +95,11 @@ function MenuLink({href, children, ...props}) {
 
 // eslint-disable-next-line no-unused-vars
 function Example() {
-  return <div className="example" style={{position: "relative"}}>
-    <Menu>
-      <div className="menu-click__area">
+  return (
+    <div className="example" style={{ position: "relative" }}>
+      <Menu>
         <MenuButton>click me</MenuButton>
-      </div>
-      <MenuList>
+        <MenuList>
           <MenuItem>
             <p>menu item 1</p>
           </MenuItem>
@@ -103,10 +109,11 @@ function Example() {
           <MenuItem>
             <input type="text" placeholder="type"/>
           </MenuItem>
-          <MenuLink href="./">link</MenuLink>
+            <MenuLink href="./">link</MenuLink>
         </MenuList>
-    </Menu>
-  </div>
+      </Menu>
+    </div>
+  )
 }
 
 function App() {
