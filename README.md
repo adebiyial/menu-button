@@ -1,6 +1,6 @@
 # A Contrived [Menu Button](https://reach.tech/menu-button)
 
-> See [demo on CodeSandbox](https://codesandbox.io/s/menu-button-demo-9o0f8])
+> See [demo on CodeSandbox](https://codesandbox.io/s/menu-button-demo-9o0f8)
 
 I tried to use my knowledge from [Epic React](https://epicreact.dev) to create a Menu Button like https://reach.tech/menu-button
 
