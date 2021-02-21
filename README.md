@@ -90,7 +90,7 @@ function useClickOutside(initialState) {
         }
 
         if (isKeydownEvent) {
-          const isEscapeKey = isKeydownEvent && el.keyCode === 27 && true;
+          const isEscapeKey = isKeydownEvent && el.keyCode === 27;
           if (isEscapeKey) {
             return setOn(false);
           }
